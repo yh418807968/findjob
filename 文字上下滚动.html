@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>文字上下滚动</title>
+	<style>
+	*{margin:0px;
+		padding:0px;}
+	 .move {
+		/*position: relative;*/
+		overflow: hidden;
+		width: 150px;
+		height: 90px;
+		color: black;
+		font-size: 14px;
+		/*border:1px solid black;*/
+	}
+
+	.move .roll {
+		
+		height: 500px;
+	}
+
+	 .move p {
+		/*box-sizing: border-box;*/
+		height: 90px;
+		text-indent: 25px;
+		line-height: 15px;
+	}
+
+	 .move p:hover {
+		color: red;
+	}
+	</style>
+</head>
+<body>
+	<div class="move" id="move">
+		<div class="roll" id="roll">
+		<p>注册会员即送乐豆，评论、晒单乐豆十倍送，100乐豆=1元钱哦！</p>
+		<p>五一劳动节假期将至，商城订单将在5月2日工厂加班发货，4月30日和5月1日两天暂停发货，给您带来不便，敬请谅解！</p>
+		<p>联想小新Air 13寸新品来袭，轻薄时尚，性能强劲，新品免费试用申请中，快来参与！</p>
+		<p>注册会员即送乐豆，评论、晒单乐豆十倍送，100乐豆=1元钱哦！</p>
+		</div>
+	</div>
+	<script>
+	    //无间歇滚动
+		var clock= setInterval(movefn,500);
+		var move = document.getElementById("move");
+		// move.scrollTop = 0;
+		var roll =document.getElementById("roll");
+		
+		// function movefn() {
+		// 	if(move.scrollTop < 90*3){
+		// 		move.scrollTop ++;
+		// 	}else{
+		// 		move.scrollTop = 0;
+		// 	}	
+		// }
+		// 
+		// 
+		// 
+		// 间歇滚动
+		// var clock= setInterval(movefn,3000);
+		// var move = document.getElementById("move");
+		// var roll =document.getElementById("roll");
+		// var timer = null;
+		// function movefn(){
+		// 	clearInterval(timer);
+		// 	// var time = 900*(Math.abs(offset)/600);
+		// 	var interval = 20;//间隔时间
+		// 	// var speed = offset/(time/interval);
+		// 	var newTop = move.scrollTop + 90;
+		// 	timer = setInterval(function(){
+		// 		if( move.scrollTop <newTop){
+		// 			move.scrollTop+=2;
+		// 		}else{
+		// 			clearInterval(timer);
+		// 			move.scrollTop=newTop;
+					
+		// 			if(newTop >= 270){
+		// 				move.scrollTop =0;
+		// 			}
+					
+		// 		}
+		// },interval)	
+		// }
+		
+	</script>
+</body>
+</html>

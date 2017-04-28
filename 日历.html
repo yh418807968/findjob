@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <style type="text/css">
+  	body,html{padding: 0;margin: 0;font-size: 14px;color:#000;}
+	table {border-collapse: collapse;width: 100%;table-layout: fixed;}
+	td,th {border: 1px solid #e1e1e1;padding: 0;height: 20px;line-height: 20px;text-align: center;}
+	.current{color:red;}
+  </style>
+</head>
+<body>
+	<table>
+    <thead>
+        <tr><th>一</th><th>二</th><th>三</th><th>四</th><th>五</th><th>六</th><th>日</th></tr>
+    </thead>
+    <tbody>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+</table>
+<script > 
+function calendar(year, month) {
+    var date = new Date(year,month-1,1);
+    var first = date.getDay();
+    var tds = document.getElementsByTagName("td");
+    var monthDays = [31,28,31,30,31,30,31,31,30,31,30,31];
+    //判断闰年
+    if((year % 4 == 0) && (year % 100 != 0 || year % 400 == 0)){
+        monthDays[1] = 29;
+    }
+    //清空
+    for(var i = 0; i < tds.length; i++){
+        tds[i].innerHTML = "";
+        tds[i].className = "";
+    }
+    var startIndex;
+    if(first == 0){
+        startIndex = 6;
+    }else{
+        startIndex = first - 1;
+    }
+    //从一个开始，按顺序填入每一天
+    for(var i = 1, j = startIndex; i <= monthDays[month - 1]; i++,j++){
+        tds[j].innerHTML = i;
+    }
+    //找到今天的日期
+    var today = new Date();
+    var num = today.getDate();
+    if(year == today.getFullYear() && (month-1)== today.getMonth()){
+      tds[num + startIndex - 1].className = "current";
+    }
+}
+
+calendar(2017, 4);
+</script>
+</body>
+</html>

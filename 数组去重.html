@@ -1,0 +1,60 @@
+<!DOCTYPE html >
+<html >
+<head>
+    <title></title>
+<style>
+</style>
+</head>
+<body>
+<ul id="target">
+    <li>1</li>
+    <li>6</li>
+    <li>3</li>
+    <li>4</li>
+    <li>4</li>
+    <li>2</li>
+</ul>
+
+</p>
+<script>
+//产生从start到end的num个随机数
+function rand(start,end,num){
+  var width = end-start;
+  var arr=[];
+  for(var i=0;i<num;i++){
+    arr[i]=""+Math.floor(Math.random()*width + start);
+  }
+  return arr;
+} 
+//去重方法一（改变原数组）
+function foo1(arr){
+  var map = {};
+  for(var i=arr.length;i>0;i--){
+    //注意arr的长度在变化
+    if(!map[arr[i]]){
+      map[arr[i]]=true;
+    }else{
+      arr.splice(i,1);
+    }
+  }
+  return arr;
+}
+//去重方法二（不改变原数组）
+function foo2(arr){
+  var map ={};
+  var data = [];//存放得到的新数组
+  for(var i=0;i<arr.length;i++){
+    if(!map[arr[i]]){
+      map[arr[i]]=true;
+      data.push(arr[i])
+    }
+  }
+  return data;
+}
+
+var a = rand(34,38,100);
+console.log(a);
+console.log(foo2(a));
+</script>
+</body>
+</html>

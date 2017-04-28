@@ -1,0 +1,36 @@
+<!DOCTYPE html >
+<html >
+<head>
+    <title></title>
+<style>
+</style>
+</head>
+<body>
+<ul id="target">
+    <li>1</li>
+    <li>6</li>
+    <li>3</li>
+    <li>4</li>
+    <li>4</li>
+    <li>2</li>
+</ul>
+
+</p>
+<script>
+var target = document.getElementById("target");
+var list=target.children;
+var frag = document.createDocumentFragment();
+
+while(list.length>0){
+  var values=[];
+  Array.prototype.slice.apply(list).map(function(item,index,array){
+    values.push(item.innerHTML);
+  })
+  var str = values.join("");
+  values.sort(function(a,b){return a-b});
+  frag.appendChild(list[str.indexOf(values[0])]);
+}
+target.appendChild(frag);
+</script>
+</body>
+</html>
