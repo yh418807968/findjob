@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>è½®æ’­å›¾</title>
+	<title>ÂÖ²¥Í¼</title>
 	<style>
 		* {
 		            margin: 0;
@@ -20,6 +20,7 @@
 		            height: 400px;
 		            border: 3px solid #333;
 		            overflow: hidden;
+		            
 		        }
 		        
 		        #list {
@@ -119,23 +120,29 @@
 	var btnlist = document.getElementById("buttons");
 	var index = 1;
 	var timer = null;
+	var animated =false;
 	prev.onclick = function(){
-		index--;
-		if(index < 1){
-			index =4;
+		if(!animated){
+			index--;
+			if(index < 1){
+				index =4;
+			}
+			animate(600);
+			showBtn();
 		}
-		animate(600);
-		showBtn();
+		
 	}
 	next.onclick = function(){
-		index++;
-		if(index >4){
-			index = 1;
+		if(!animated){
+			index++;
+			if(index >4){
+				index = 1;
+			}
+			animate(-600);
+			showBtn();
 		}
-		animate(-600);
-		showBtn();
 	}
-	//åº•éƒ¨åœ†ç‚¹ç‚¹å‡»ï¼ˆäº‹ä»¶å§”æ‰˜ï¼‰
+	//µ×²¿Ô²µãµã»÷£¨ÊÂ¼þÎ¯ÍÐ£©
 	btnlist.onclick = function(e){
 		if(e.target.nodeName.toLowerCase() == 'span'){
 			var oldIndex = index;
@@ -145,7 +152,7 @@
 			clearInterval(clock);
 		}
 	}
-	//è‡ªåŠ¨è½®æ’­
+	//×Ô¶¯ÂÖ²¥
 	clock = setInterval(prev.onclick,2000);
 	container.onmouseover = function(){
 		clearInterval(clock);
@@ -153,11 +160,11 @@
 	container.onmouseout = function(){	
 		clock = setInterval(prev.onclick,2000);
 	}
-	//åŠ¨ç”»
+	//¶¯»­
 	function animate(offset){
-		clearInterval(timer);
+		animated =true;
 		var time = 900*(Math.abs(offset)/600);
-		var interval = 30;//é—´éš”æ—¶é—´
+		var interval = 30;//¼ä¸ôÊ±¼ä
 		var speed = offset/(time/interval);
 		var newLeft = parseInt(list.style.left) + offset;
 		timer = setInterval(function(){
@@ -165,6 +172,7 @@
 				list.style.left =parseInt(list.style.left )+speed +"px";
 			}else{
 				clearInterval(timer);
+				animated =false;
 				list.style.left = newLeft +"px";
 				
 				if(newLeft < -2400){
@@ -176,7 +184,7 @@
 			}
 	},interval)	
 	}
-	//æŒ‰é’®æ˜¾ç¤º
+	//°´Å¥ÏÔÊ¾
 	function showBtn(){
 		for(var i=0;i<btns.length;i++){
 			btns[i].className = "";

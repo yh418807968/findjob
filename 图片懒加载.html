@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Document</title>
+<style>
+img {
+display: block;
+margin-bottom: 50px;
+width: 400px;
+height: 400px;
+}
+</style>
+</head>
+<body>
+<img src="default.jpg" data-src="http://ww4.sinaimg.cn/large/006y8mN6gw1fa5obmqrmvj305k05k3yh.jpg" alt="">
+<img src="default.jpg" data-src="http://ww4.sinaimg.cn/large/006y8mN6gw1fa5obmqrmvj305k05k3yh.jpg" alt="">
+<img src="default.jpg" data-src="http://ww1.sinaimg.cn/large/006y8mN6gw1fa7kaed2hpj30sg0l9q54.jpg" alt="">
+<img src="default.jpg" data-src="http://ww1.sinaimg.cn/large/006y8mN6gw1fa7kaed2hpj30sg0l9q54.jpg" alt="">
+<img src="default.jpg" data-src="http://ww4.sinaimg.cn/large/006y8mN6gw1fa5obmqrmvj305k05k3yh.jpg" alt="">
+<img src="default.jpg" data-src="http://ww4.sinaimg.cn/large/006y8mN6gw1fa5obmqrmvj305k05k3yh.jpg" alt="">
+<img src="default.jpg" data-src="http://ww4.sinaimg.cn/large/006y8mN6gw1fa5obmqrmvj305k05k3yh.jpg" alt="">
+<img src="default.jpg" data-src="http://ww4.sinaimg.cn/large/006y8mN6gw1fa5obmqrmvj305k05k3yh.jpg" alt="">
+<img src="default.jpg" data-src="http://ww1.sinaimg.cn/large/006y8mN6gw1fa7kaed2hpj30sg0l9q54.jpg" alt="">
+<img src="default.jpg" data-src="http://ww4.sinaimg.cn/large/006y8mN6gw1fa5obmqrmvj305k05k3yh.jpg" alt="">
+<img src="default.jpg" data-src="http://ww4.sinaimg.cn/large/006y8mN6gw1fa5obmqrmvj305k05k3yh.jpg" alt="">
+
+<script>
+var imgList = document.getElementsByTagName("img");
+var len =imgList.length;
+var isLoad= [];//图片是否已经加载
+imgLoad();//滚动前先加载已经在页面中的图片
+window.onscroll = throttle(imgLoad,200,300);
+//懒加载
+function imgLoad(){
+  var seeHeight = document.documentElement.clientHeight;
+  for(var i=0;i<len;i++){
+    if(imgList[i].getBoundingClientRect().top<seeHeight&&!isLoad[i]){
+      imgList[i].src = imgList[i].dataset.src;
+      isLoad[i] = true;
+    }
+  }
+}
+//节流函数
+function throttle(fun,delay,time){
+  var timer = null;
+  startTime = new Date();
+  return function(){
+    curTime = new Date();
+    clearTimeout(timer);
+    if(curTime - startTime>=time){
+      fun.apply(this,arguments);
+      startTime = curTime;
+    }else{
+      timer = setTimeout(fun,delay);
+    }
+  }
+
+}
+
+</script>    
+</body>
+</html>

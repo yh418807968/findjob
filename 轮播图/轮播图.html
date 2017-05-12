@@ -27,6 +27,7 @@
 		            z-index: 1;
 		            width: 4200px;
 		            height: 400px;
+		            
 		        }
 		        
 		        #list img {
@@ -145,12 +146,12 @@
 		}
 	}
 	//自动轮播
-	clock = setInterval(prev.onclick,1000);
+	clock = setInterval(prev.onclick,2000);
 	container.onmouseover = function(){
 		clearInterval(clock);
 	}
 	container.onmouseout = function(){	
-		clock = setInterval(prev.onclick,1000);
+		clock = setInterval(prev.onclick,2000);
 	}
 	//动画
 	function animate(offset){
