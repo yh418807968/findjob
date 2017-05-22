@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <style>
+  *{
+    margin:0;
+    padding: 0;
+  }
+input{
+  width:200px;
+  height:20px;
+}
+li.cur{
+  background: grey;
+}
+ul.hide{
+  display: none;
+}
+
+  </style>
+
+
+</head>
+<body >
+<div>
+<input id="txtInput" type="search"/>
+<ul id="list">
+</ul>
+</div>
+
+</body>
+<script src="EventUtil.js"></script>
+<script>
+//获得相关联的数据
+function getData(){
+  if(this.value.trim() !=""){
+    var script = document.createElement("script");
+    script.src = "https://www.baidu.com/su?&wd="+encodeURI(this.value.trim())+"&p=3&cb=fn";
+    document.body.appendChild(script);
+  }
+}
+//jsonp的回调函数，将数据转换成对应的列表
+function fn(data){
+  var frag = document.createDocumentFragment();
+  data.s.forEach(function(item,index,arr){
+    var li = document.createElement("li");
+    li.innerHTML = item;
+    // li.dataset.index =index; 
+    frag.appendChild(li);
+  });
+  list.appendChild(frag);
+  list.dataset.index = -1;
+}
+//鼠标移动到某个列表上
+function hoverin(e){
+  if(e.target.tagName.toLowerCase() ==="li"){
+    reset(e.target);
+  }
+  EventUtil.addHandler(list,"click",function(event){
+    if(e.target.tagName.toLowerCase() ==="li"){
+      goto(e.target);
+    }
+  })
+}
+//鼠标移出某个列表上
+function hoverout(e){
+  //为当前目标移除cur属性
+  if(e.target.tagName.toLowerCase() ==="li"){
+    EventUtil.removeClass(e.target,"cur");
+  }
+}
+//键盘也可以控制选项
+function keyFn(e){
+  if(e.keyCode != 38 &&e.keyCode != 40){
+    return
+  }
+  if(list.children){
+    var key =e.keyCode;
+    switch(key){
+      case 38:
+           if(parseInt(list.dataset.index) >-1){
+             list.dataset.index =parseInt(list.dataset.index)-1;
+           }else{
+            list.dataset.index = parseInt(list.children.length-1);
+           }
+           break;
+      case 40:
+          if(parseInt(list.dataset.index) <list.children.length-1){
+            list.dataset.index =parseInt(list.dataset.index)+1;
+          }else{
+           list.dataset.index = 0;
+          }
+          break;
+    }
+    reset(list.children[list.dataset.index]);
+    //在定位到某个选项后，按enter键可以跳转
+    EventUtil.addHandler(window,"keyup",function(event){
+      if(event.keyCode === 13){
+       var target =list.children[list.dataset.index] ;
+       goto(target);
+
+      }
+    })
+  }
+}
+//重置样式（鼠标滑过不同的列表背景不同）
+function reset(target){
+  //移除所有的cur属性
+  Array.prototype.slice.call(list.children).forEach(function(item,index,arr){
+      EventUtil.removeClass(item,"cur");
+    });
+  //为当前目标添加cur属性
+  if(target.tagName.toLowerCase() ==="li"){
+    EventUtil.addClass(target,"cur");
+  }
+}
+//跳转到特定的页面
+function goto(target){
+  var wd = target.innerHTML;
+  EventUtil.addClass(list,"hide");
+  window.open('https://www.baidu.com/s?word=' + wd);
+}
+//输入框获得focus时，显示列表项
+function show(){
+  EventUtil.removeClass(list,"hide");
+}
+
+window.onload = function(){
+  var box = document.getElementById("txtInput");
+  var list = document.getElementById("list");
+  EventUtil.addHandler(box,"input",getData);
+  EventUtil.addHandler(list,"mouseover",hoverin);
+  EventUtil.addHandler(list,"mouseout",hoverout);
+  EventUtil.addHandler(window,"keyup",keyFn);
+  EventUtil.addHandler(box,"focus",show);
+
+}
+
+</script>
+</html>
